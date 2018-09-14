@@ -6,7 +6,6 @@
 
 import os
 import threading
-import logging
 import DingDongConstant
 from DingDongRequestHandler import DingDongRequestHandler
 
@@ -15,10 +14,9 @@ class SaySthThread(threading.Thread):
         用于无限次播放文字内容的线程类
     '''
 
-    def __init__(self, datas):
+    def __init__(self, params):
         threading.Thread.__init__(self)
-        datas_array = datas.split(DingDongConstant.SPLIT_FLAG)
-        self.content = datas_array[1] if len(datas_array) >= 1 else ''
+        self.content = params or ''
         DingDongRequestHandler.saySthThreads.append(self)
 
     def run(self):

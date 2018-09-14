@@ -11,7 +11,7 @@ class StopSayThread(threading.Thread):
     '''
         用于停止播放文字内容的线程类
     '''
-    def __init__(self, datas):
+    def __init__(self, params):
         threading.Thread.__init__(self)
 
     def run(self):

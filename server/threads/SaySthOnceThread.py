@@ -14,10 +14,9 @@ class SaySthOnceThread(threading.Thread):
         用于播放一次文字内容的线程类
     '''
 
-    def __init__(self, datas):
+    def __init__(self, params):
         threading.Thread.__init__(self)
-        datas_array = datas.split(DingDongConstant.SPLIT_FLAG)
-        self.content = datas_array[1] if len(datas_array) >= 1 else ''
+        self.content = params or ''
         logging.info('content=%s', self.content)
 
     def run(self):
