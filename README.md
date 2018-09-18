@@ -9,5 +9,14 @@ dingdong提醒
 * 在服务端中调用mac操作系统自带的say命令进行文字转语音，调用afplay命令进行音乐播放；
 * 因为需要由微信端向mac mini端发起请求，所以微信端需要在公网上定位到mac mini，申请了一个免费的花生壳域名在路由中设置了ddns，使得微信端可以在公网通过花生壳域名访问到路由，再在路由设置了转发处理，将微信端的请求通过路由转发给mac mini,这样子就实现了微信端与mac mini的通信。
 # 目录结构
-server--服务端代码
-DingDongClient.py--测试用的客户端代码
+* server--服务端代码
+* client--客户端代码
+* client/python---python客户端代码
+* client/java-----java客户端代码
+* client/android--安卓客户端代码
+#运行
+* 服务端启动 sh server/shell/start.sh
+* 服务端关闭 sh server/shell/stop.sh
+* 服务端重启 sh server/shell/restart.sh
+* python客户端运行 cd client/python    && python DingDongClient.py PlayMusicThread
+* java客户端运行   cd client/java/src  && javac com/dingdong/client/DingDongClient.java && java com.dingdong.client.DingDongClient PlayMusicThread
