@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:id="@+id/cmdLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+
+            <TextView
+                android:id="@+id/cmdTipsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/chooseCmdBtn"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="5dp"
+                android:text="指令："
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/cmdTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/chooseCmdBtn"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/cmdTipsTextView"
+                android:tag="PlayMusicThread"
+                android:text="播放音乐"
+                android:textSize="16sp" >
+            </TextView>
+
+            <Button
+                android:id="@+id/chooseCmdBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/cmdTextView"
+                android:text="重选" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/msgLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cmdLine"
+            android:layout_centerHorizontal="true" >
+
+            <TextView
+                android:id="@+id/msgTipsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/msgEditText"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="5dp"
+                android:text="消息："
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/msgEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/msgTipsTextView"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:tag="small"
+                android:text=""
+                android:textSize="16sp" >
+            </EditText>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/sendCmdBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/msgLine"
+            android:text="发送指令" />
+    </RelativeLayout>
+
+</ScrollView>
