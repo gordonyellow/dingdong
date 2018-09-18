@@ -14,7 +14,7 @@ dingdong提醒
 * client/python---python客户端代码
 * client/java-----java客户端代码
 * client/android--安卓客户端代码
-#运行
+# 运行
 * 服务端启动 sh server/shell/start.sh
 * 服务端关闭 sh server/shell/stop.sh
 * 服务端重启 sh server/shell/restart.sh
