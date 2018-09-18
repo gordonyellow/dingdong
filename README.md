@@ -18,5 +18,10 @@ dingdong提醒
 * 服务端启动 sh server/shell/start.sh
 * 服务端关闭 sh server/shell/stop.sh
 * 服务端重启 sh server/shell/restart.sh
-* python客户端运行 cd client/python    && python DingDongClient.py PlayMusicThread
-* java客户端运行   cd client/java/src  && javac com/dingdong/client/DingDongClient.java && java com.dingdong.client.DingDongClient PlayMusicThread
+* python客户端运行
+   * cd client/python
+   * python3 DingDongClient.py PlayMusicThread
+* java客户端运行   
+   * cd client/java/src  
+   * javac com/dingdong/client/DingDongClient.java 
+   * java com.dingdong.client.DingDongClient PlayMusicThread
