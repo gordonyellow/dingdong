@@ -8,9 +8,11 @@ import socket
 import time
 import hashlib
 
-HOST = '127.0.0.1'
-PORT = 1234
-SECRET_KEY = 'dingdong_abc123@@'
+#HOST = '127.0.0.1'
+#PORT = 1234
+HOST = 'gordon168.oicp.net'
+PORT = 17720
+SECRET_KEY = 'dingdong_abc@@123'
 SPLIT_FLAG = '____@@@____'
 
 class DingDongClient:

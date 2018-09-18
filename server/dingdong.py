@@ -16,7 +16,5 @@ if __name__ == '__main__':
                 filename=DingDongConstant.LOG_PATH, \
                 filemode='a')
 
-    HOST = '0.0.0.0'
-    PORT = 1234
-    ADDR = (HOST, PORT)
+    ADDR = (DingDongConstant.SERVER_HOST, DingDongConstant.SERVER_PORT)
     ThreadingTCPServer(ADDR, DingDongRequestHandler).serve_forever()

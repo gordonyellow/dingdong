@@ -5,3 +5,5 @@ LOG_PATH='/var/log/dingdong.log' #日志
 BIN_SAY='/usr/bin/say' #播放文字内容的程序路径
 SPLIT_FLAG='____@@@____' #命令分隔符
 SECRET_KEY='dingdong_abc123@@' #私钥，实际使用时自己另外设置一下
+SERVER_PORT=1234
+SERVER_HOST='0.0.0.0'
