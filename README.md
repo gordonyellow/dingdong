@@ -25,3 +25,10 @@ dingdong提醒
    * cd client/java/src  
    * javac com/dingdong/client/DingDongClient.java 
    * java com.dingdong.client.DingDongClient PlayMusicThread
+* 安卓客户端运行
+   * 安装好安卓SDK和ant
+   * cd client/android/DingDongAndroidClient
+   * 编译：ant clean && ant debug
+   * ant uninstall && ant installd (或者直接找到编译好的apk包安装，路径为client/android/DingDongAndroidClient/bin/DingDongAndroidClient-debug.apk)
+    * 在手机中打开应用并选择指令发送即可
+   * python3 DingDongClient.py PlayMusicThread
