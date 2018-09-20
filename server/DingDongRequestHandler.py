@@ -20,6 +20,29 @@ class DingDongRequestHandler(StreamRequestHandler):
     voiceThreads = [] #存放播放微信语音消息的线程
 
     @classmethod
+    def getOptClass(cls, datas):
+        '''
+            从接收的数据中获取实际opt类
+            @param datas 字符串 接收的数据
+            @return (optClass, opt, optParams) 由opt类,opt及opt参数组成的tuple实例
+        '''
+        optClass = None
+        opt = ''
+        optParams = ''
+        try:
+            opt = datas.split(DingDongConstant.SPLIT_FLAG)[0]
+            optParams = datas.split(DingDongConstant.SPLIT_FLAG)[1]
+            logging.info('opt=%s', opt)
+            logging.info('optParams=%s', optParams)
+
+            optModel = __import__('threads.%s' % opt, fromlist=('%s' % opt))
+            optClass = getattr(optModel, opt)
+        except ImportError:
+            logging.info('import error in getOptClass')
+        logging.info('optClass=%s', optClass)
+        return (optClass, opt, optParams) if optClass else None
+
+    @classmethod
     def auth(cls, datas):
         '''
             授权校验
@@ -59,36 +82,37 @@ class DingDongRequestHandler(StreamRequestHandler):
             具体业务逻辑处理
         '''
 
-        ####################
-        #解码及授权校验
-        ####################
-        datas = self.rfile.readline()
-        if datas:
+        while True:
+            ####################
+            #读取客户端数据
+            #如果读取时抛出异常，说明客户端已经断开连接，服务端也直接断开
+            ####################
+            datas = ''
+            try:
+                datas = self.rfile.readline()
+            except:
+                logging.info('catch exception in handle')
+                break #断开连接
+
+            ####################
+            #解码及授权校验
+            ####################
             datas = datas.strip().decode('UTF-8')
-        logging.info('datas=%s', datas)
+            logging.info('datas=%s', datas)
+            if not DingDongRequestHandler.auth(datas):
+                self.wfile.write(('[%s] auth failed' % ctime()).encode('UTF-8'))
+                logging.info('auth failed')
+                continue
 
-        if not DingDongRequestHandler.auth(datas):
-            self.wfile.write(('[%s] auth failed' % ctime()).encode('UTF-8'))
-            logging.info('auth failed')
-            return False
-
-        ####################
-        #根据指令进行相关处理
-        ####################
-        opt = datas.split(DingDongConstant.SPLIT_FLAG)[0]
-        optParams = datas.split(DingDongConstant.SPLIT_FLAG)[1]
-        logging.info('opt=%s', opt)
-        logging.info('optParams=%s', optParams)
-        try:
-            optModel = __import__('threads.%s' % opt, fromlist=('%s' % opt))
-            optClass = getattr(optModel, opt)
-            logging.info('optClass=%s', optClass)
-            self.wfile.write(('[%s] %s done' % (ctime(), opt)).encode('UTF-8'))
-
-            optClass(optParams).start()
-        except ImportError:
-            logging.info('optClass=unknow')
-            self.wfile.write(('[%s] %s' % (ctime(), datas)).encode('UTF-8'))
+            ####################
+            #解析指令并执行
+            ####################
+            (optClass, opt, optParams) = DingDongRequestHandler.getOptClass(datas)
+            response = '[%s] unknow opt' % ctime()
+            if optClass is not None:
+                optClass(optParams).start()
+                response = '[%s] %s called' % (ctime(), opt)
+            self.wfile.write(response.encode('UTF-8'))
 
 
         '''
