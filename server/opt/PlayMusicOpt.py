@@ -5,16 +5,15 @@
 '''
 
 import os
-import threading
 import DingDongConstant
 
-class PlayMusicThread(threading.Thread):
+class PlayMusicOpt:
     '''
-        用于播放音乐的线程
+        播放音乐
     '''
 
     def __init__(self, params):
-        threading.Thread.__init__(self)
+        pass
 
-    def run(self):
+    def do(self):
         os.system('%s %s &' % (DingDongConstant.MUSIC_PLAYER, DingDongConstant.DEFAULT_MUSIC))

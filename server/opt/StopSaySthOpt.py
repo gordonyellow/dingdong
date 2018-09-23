@@ -4,16 +4,15 @@
     停止播放文字内容
 '''
 
-import threading
 from DingDongRequestHandler import DingDongRequestHandler
 
-class StopSayThread(threading.Thread):
+class StopSaySthOpt:
     '''
-        用于停止播放文字内容的线程类
+        停止播放文字内容
     '''
     def __init__(self, params):
-        threading.Thread.__init__(self)
+        pass
 
-    def run(self):
+    def do(self):
         for t in DingDongRequestHandler.saySthThreads:
             t.content = ''

@@ -1,23 +1,26 @@
 #_*_ encoding:utf-8 _*_
 
 '''
-    无限次播放文字内容相关处理
+    无限次播放文字内容
 '''
 
 import os
-import threading
 import DingDongConstant
 from DingDongRequestHandler import DingDongRequestHandler
+import threading
 
-class SaySthThread(threading.Thread):
+class SaySthOpt(threading.Thread):
     '''
-        用于无限次播放文字内容的线程类
+        无限次播放文字内容
     '''
 
     def __init__(self, params):
         threading.Thread.__init__(self)
         self.content = params or ''
         DingDongRequestHandler.saySthThreads.append(self)
+
+    def do(self):
+        self.start()
 
     def run(self):
         while True:

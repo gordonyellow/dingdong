@@ -5,20 +5,18 @@
 '''
 
 import os
-import threading
 import logging
 import DingDongConstant
 
-class SaySthOnceThread(threading.Thread):
+class SaySthOnceOpt:
     '''
-        用于播放一次文字内容的线程类
+        播放一次文字内容
     '''
 
     def __init__(self, params):
-        threading.Thread.__init__(self)
         self.content = params or ''
         logging.info('content=%s', self.content)
 
-    def run(self):
+    def do(self):
         if self.content:
             os.system("%s %s" % (DingDongConstant.BIN_SAY, self.content))
