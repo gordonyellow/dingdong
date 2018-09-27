@@ -16,3 +16,6 @@ class PrintInfoOpt:
     def do(self):
         if self.goal == 'DingDongRequestHandler.saySthThreads':
             logging.info('DingDongRequestHandler.saySthThreads=%s', DingDongRequestHandler.saySthThreads)
+        if self.goal == 'DingDongRequestHandler.playVoiceProcesses':
+            logging.info('DingDongRequestHandler.playVoiceProcesses.isEmpty=%s', \
+                DingDongRequestHandler.playVoiceProcesses.empty())

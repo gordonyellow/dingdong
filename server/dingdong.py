@@ -3,10 +3,11 @@
     程序入口
 '''
 
+import os
 import logging
-import DingDongConstant
-from DingDongRequestHandler import DingDongRequestHandler
 from socketserver import ThreadingTCPServer
+from DingDongRequestHandler import DingDongRequestHandler
+import DingDongConstant
 
 if __name__ == '__main__':
     #日志配置
@@ -15,6 +16,9 @@ if __name__ == '__main__':
                 datefmt='%a, %d %b %Y %H:%M:%S', \
                 filename=DingDongConstant.LOG_PATH, \
                 filemode='a')
+
+    with open(DingDongConstant.DING_DONG_PID_FILE, 'wb+') as f:
+        f.write(('%s' % os.getpid()).encode())
 
     ADDR = (DingDongConstant.SERVER_HOST, DingDongConstant.SERVER_PORT)
     ThreadingTCPServer(ADDR, DingDongRequestHandler).serve_forever()

@@ -10,6 +10,7 @@ import time
 from time import ctime
 from socketserver import StreamRequestHandler
 import DingDongConstant
+from multiprocessing import Manager
 
 class DingDongRequestHandler(StreamRequestHandler):
     '''
@@ -18,6 +19,7 @@ class DingDongRequestHandler(StreamRequestHandler):
 
     saySthThreads = [] #存放播放文字语音的线程
     voiceThreads = [] #存放播放微信语音消息的线程
+    playVoiceProcesses = Manager().Queue() #存放播放声音文件的子进程
 
     @classmethod
     def getOptClass(cls, datas):
@@ -35,8 +37,9 @@ class DingDongRequestHandler(StreamRequestHandler):
             logging.info('opt=%s', opt)
             logging.info('optParams=%s', optParams)
 
-            optModel = __import__('threads.%s' % opt, fromlist=('%s' % opt))
-            optClass = getattr(optModel, opt)
+            optClassName = '%sOpt' % opt
+            optModel = __import__('opt.%s' % optClassName, fromlist=('%s' % optClassName))
+            optClass = getattr(optModel, optClassName)
         except ImportError:
             logging.info('import error in getOptClass')
         logging.info('optClass=%s', optClass)
@@ -100,7 +103,7 @@ class DingDongRequestHandler(StreamRequestHandler):
             datas = datas.strip().decode('UTF-8')
             logging.info('datas=%s', datas)
             if not DingDongRequestHandler.auth(datas):
-                self.wfile.write(('[%s] auth failed' % ctime()).encode('UTF-8'))
+                self.wfile.write(('[%s] auth failed\r\n' % ctime()).encode('UTF-8'))
                 logging.info('auth failed')
                 continue
 
@@ -110,8 +113,15 @@ class DingDongRequestHandler(StreamRequestHandler):
             (optClass, opt, optParams) = DingDongRequestHandler.getOptClass(datas)
             response = '[%s] unknow opt' % ctime()
             if optClass is not None:
-                optClass(optParams).start()
-                response = '[%s] %s called' % (ctime(), opt)
+                if opt == 'PlayVoice':
+                    logging.info('help(self.rfile.read)=%s' % help(self.rfile.read))
+                    logging.info('help(self.rfile.read)=%s' % help(self.rfile.readline))
+                    logging.info('type(self.rfile)=%s' % type(self.rfile))
+                    response = optClass(optParams, self.rfile).do()
+                else:
+                    response = optClass(optParams).do()
+                if not response:
+                    response = '[%s] %s called\r\n' % (ctime(), opt)
             self.wfile.write(response.encode('UTF-8'))
 
 
